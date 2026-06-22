@@ -34,26 +34,33 @@ export function TasksPage() {
   }
 
   return (
-    <div className="tasks-page">
-      <header>
-        <h1>Tasks</h1>
-        <div>
-          <span>{user?.email}</span>
-          <button onClick={logout}>Log out</button>
+    <div className="mx-auto mt-12 max-w-2xl rounded-xl bg-white p-6 shadow">
+      <header className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-semibold text-gray-900">Tasks</h1>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-600">{user?.email}</span>
+          <button
+            onClick={logout}
+            className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            Log out
+          </button>
         </div>
       </header>
 
       <TaskForm onSubmit={handleCreate} />
 
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
+      {loading && <p className="text-sm text-gray-500">Loading...</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
 
-      <ul className="task-list">
+      <ul className="flex flex-col gap-2">
         {tasks.map((task) => (
           <TaskItem key={task.id} task={task} onStatusChange={handleStatusChange} onDelete={handleDelete} />
         ))}
       </ul>
-      {!loading && tasks.length === 0 && <p>No tasks yet — add one above.</p>}
+      {!loading && tasks.length === 0 && (
+        <p className="text-sm text-gray-500">No tasks yet — add one above.</p>
+      )}
     </div>
   );
 }

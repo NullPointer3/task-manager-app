@@ -14,21 +14,27 @@ export function RegisterPage() {
     setError(null);
     try {
       await register(email, password);
-      navigate("/");
+      navigate("/app");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     }
   }
 
   return (
-    <div className="auth-page">
-      <h1>Create account</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div className="mx-auto mt-12 max-w-sm rounded-xl bg-white p-6 shadow">
+      <h1 className="mb-4 text-2xl font-semibold text-gray-900">Create account</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
           Email
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          />
         </label>
-        <label>
+        <label className="flex flex-col gap-1 text-sm font-medium text-gray-700">
           Password (min 8 characters)
           <input
             type="password"
@@ -36,13 +42,22 @@ export function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             minLength={8}
             required
+            className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
           />
         </label>
-        {error && <p className="error">{error}</p>}
-        <button type="submit">Register</button>
+        {error && <p className="text-sm text-red-600">{error}</p>}
+        <button
+          type="submit"
+          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+        >
+          Register
+        </button>
       </form>
-      <p>
-        Already have an account? <Link to="/login">Log in</Link>
+      <p className="mt-4 text-sm text-gray-600">
+        Already have an account?{" "}
+        <Link to="/login" className="font-medium text-blue-600 hover:underline">
+          Log in
+        </Link>
       </p>
     </div>
   );

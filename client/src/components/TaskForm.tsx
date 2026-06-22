@@ -23,19 +23,25 @@ export function TaskForm({ onSubmit }: TaskFormProps) {
   }
 
   return (
-    <form className="task-form" onSubmit={handleSubmit}>
+    <form className="mb-4 flex gap-2" onSubmit={handleSubmit}>
       <input
         placeholder="Task title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
+        className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
       />
       <input
         placeholder="Description (optional)"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
       />
-      <button type="submit" disabled={submitting}>
+      <button
+        type="submit"
+        disabled={submitting}
+        className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+      >
         Add task
       </button>
     </form>
