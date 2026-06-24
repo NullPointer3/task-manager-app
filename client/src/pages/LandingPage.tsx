@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatedStat } from "../components/AnimatedStat";
 import { Logo } from "../components/Logo";
+import { Reveal } from "../components/Reveal";
 
 const FEATURES = [
   {
@@ -175,7 +176,7 @@ export function LandingPage() {
           aria-hidden="true"
           className="pointer-events-none absolute -right-32 top-10 h-96 w-96 rounded-full bg-purple-300 opacity-30 blur-3xl"
         />
-        <div className="relative z-10">
+        <Reveal className="relative z-10">
           <h1 className="text-4xl font-bold leading-tight text-gray-900 md:text-5xl">
             Build your day's foundation with tasks
           </h1>
@@ -186,21 +187,24 @@ export function LandingPage() {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               to="/register"
-              className="rounded-md bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-3 text-sm font-semibold text-white hover:from-blue-600 hover:to-indigo-600"
+              className="rounded-md bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:from-blue-600 hover:to-indigo-600"
             >
               Get started free
             </Link>
             <Link
               to="/login"
-              className="rounded-md border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
+              className="rounded-md border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
             >
               Log in
             </Link>
           </div>
           <p className="mt-4 text-sm text-gray-500">Free forever. No credit card required.</p>
-        </div>
+        </Reveal>
 
-        <div className="relative z-10 rounded-2xl border border-gray-200 bg-white/70 p-6 shadow-lg backdrop-blur-md">
+        <Reveal
+          delay={150}
+          className="relative z-10 rounded-2xl border border-gray-200 bg-white/70 p-6 shadow-lg backdrop-blur-md"
+        >
           <div className="mb-4 flex items-center justify-between gap-2">
             <span className="shrink-0 text-base font-semibold text-gray-900">Tasks</span>
             <span className="min-w-0 truncate text-sm text-gray-500">you@example.com</span>
@@ -225,7 +229,7 @@ export function LandingPage() {
               </span>
             </li>
           </ul>
-        </div>
+        </Reveal>
       </header>
 
       <section className="border-y border-gray-200 bg-white py-10">
@@ -246,107 +250,115 @@ export function LandingPage() {
 
       <section className="border-y border-gray-200 bg-gradient-to-r from-blue-50 via-gray-50 to-purple-50">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-6 py-10 md:grid-cols-4">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="text-center">
+          {STATS.map((stat, index) => (
+            <Reveal key={stat.label} delay={index * 100} className="text-center">
               <div className="text-2xl font-bold text-gray-900 md:text-3xl">
                 <AnimatedStat target={stat.target} suffix={stat.suffix} decimals={stat.decimals} />
               </div>
               <div className="mt-1 text-sm text-gray-600">{stat.label}</div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {FEATURES.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-xl border border-gray-200 bg-gradient-to-b from-white to-gray-50 p-6 shadow-sm"
-            >
-              <div
-                className={`flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${feature.gradient} text-white`}
-              >
-                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
-                  <path
-                    d={feature.icon}
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+          {FEATURES.map((feature, index) => (
+            <Reveal key={feature.title} delay={index * 120}>
+              <div className="h-full rounded-xl border border-gray-200 bg-gradient-to-b from-white to-gray-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                <div
+                  className={`flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${feature.gradient} text-white`}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+                    <path
+                      d={feature.icon}
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-gray-900">{feature.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{feature.body}</p>
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-gray-900">{feature.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{feature.body}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       <section className="bg-gradient-to-b from-gray-50 to-white px-6 py-16">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-3xl font-bold text-gray-900">How it works</h2>
+          <Reveal>
+            <h2 className="text-center text-3xl font-bold text-gray-900">How it works</h2>
+          </Reveal>
           <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
             {STEPS.map((step, index) => (
-              <div key={step.title} className="relative rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <span
-                  className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white ${STEP_GRADIENTS[index % STEP_GRADIENTS.length]}`}
-                >
-                  {index + 1}
-                </span>
-                <h3 className="mt-4 text-lg font-semibold text-gray-900">{step.title}</h3>
-                <p className="mt-2 text-sm text-gray-600">{step.body}</p>
-              </div>
+              <Reveal key={step.title} delay={index * 120}>
+                <div className="relative h-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                  <span
+                    className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white ${STEP_GRADIENTS[index % STEP_GRADIENTS.length]}`}
+                  >
+                    {index + 1}
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold text-gray-900">{step.title}</h3>
+                  <p className="mt-2 text-sm text-gray-600">{step.body}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <h2 className="text-center text-3xl font-bold text-gray-900">Loved by people who get things done</h2>
+        <Reveal>
+          <h2 className="text-center text-3xl font-bold text-gray-900">Loved by people who get things done</h2>
+        </Reveal>
         <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {TESTIMONIALS.map((testimonial) => (
-            <div key={testimonial.name} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-              <p className="text-sm text-gray-600">&ldquo;{testimonial.quote}&rdquo;</p>
-              <div className="mt-4 flex items-center gap-3">
-                <div
-                  className={`flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white ${testimonial.gradient}`}
-                >
-                  {testimonial.name
-                    .split(" ")
-                    .map((part) => part[0])
-                    .join("")}
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-xs text-gray-500">{testimonial.role}</div>
+          {TESTIMONIALS.map((testimonial, index) => (
+            <Reveal key={testimonial.name} delay={index * 120}>
+              <div className="h-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                <p className="text-sm text-gray-600">&ldquo;{testimonial.quote}&rdquo;</p>
+                <div className="mt-4 flex items-center gap-3">
+                  <div
+                    className={`flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white ${testimonial.gradient}`}
+                  >
+                    {testimonial.name
+                      .split(" ")
+                      .map((part) => part[0])
+                      .join("")}
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900">{testimonial.name}</div>
+                    <div className="text-xs text-gray-500">{testimonial.role}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       <section className="bg-gradient-to-b from-white to-gray-50 px-6 py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-center text-3xl font-bold text-gray-900">Frequently asked questions</h2>
+          <Reveal>
+            <h2 className="text-center text-3xl font-bold text-gray-900">Frequently asked questions</h2>
+          </Reveal>
           <div className="mt-10 flex flex-col gap-6">
-            {FAQS.map((faq) => (
-              <div
-                key={faq.question}
-                className="rounded-xl border border-gray-200 border-l-4 border-l-blue-500 bg-white p-6 shadow-sm"
-              >
-                <h3 className="text-base font-semibold text-gray-900">{faq.question}</h3>
-                <p className="mt-2 text-sm text-gray-600">{faq.answer}</p>
-              </div>
+            {FAQS.map((faq, index) => (
+              <Reveal key={faq.question} delay={index * 90}>
+                <div className="rounded-xl border border-gray-200 border-l-4 border-l-blue-500 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md">
+                  <h3 className="text-base font-semibold text-gray-900">{faq.question}</h3>
+                  <p className="mt-2 text-sm text-gray-600">{faq.answer}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-400 to-indigo-500 px-6 py-12 sm:px-8 sm:py-16 md:px-16 md:py-24">
+        <Reveal className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-400 to-indigo-500 px-6 py-12 sm:px-8 sm:py-16 md:px-16 md:py-24">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -right-20 -top-20 h-96 w-96 rounded-full bg-white opacity-10 blur-3xl"
@@ -399,7 +411,7 @@ export function LandingPage() {
               </ul>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <footer className="border-t border-gray-200 px-6 py-8">

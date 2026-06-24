@@ -43,17 +43,34 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+export interface AuthUser {
+  id: string;
+  email: string;
+  emailVerified: boolean;
+}
+
 export const api = {
   register: (email: string, password: string) =>
-    request<{ token: string; user: { id: string; email: string } }>("/auth/register", {
+    request<{ token: string; user: AuthUser }>("/auth/register", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     }),
   login: (email: string, password: string) =>
-    request<{ token: string; user: { id: string; email: string } }>("/auth/login", {
+    request<{ token: string; user: AuthUser }>("/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     }),
+  googleLogin: (credential: string) =>
+    request<{ token: string; user: AuthUser }>("/auth/google", {
+      method: "POST",
+      body: JSON.stringify({ credential }),
+    }),
+  verifyEmail: (token: string) =>
+    request<{ user: AuthUser }>("/auth/verify-email", {
+      method: "POST",
+      body: JSON.stringify({ token }),
+    }),
+  resendVerification: () => request<{ ok: true }>("/auth/resend-verification", { method: "POST" }),
   getTasks: () => request<Task[]>("/tasks"),
   createTask: (data: { title: string; description?: string; status?: TaskStatus; dueDate?: string }) =>
     request<Task>("/tasks", { method: "POST", body: JSON.stringify(data) }),

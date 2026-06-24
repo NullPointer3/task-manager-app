@@ -9,6 +9,17 @@ export function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [resendState, setResendState] = useState<"idle" | "sending" | "sent">("idle");
+
+  async function handleResendVerification() {
+    setResendState("sending");
+    try {
+      await api.resendVerification();
+      setResendState("sent");
+    } catch {
+      setResendState("idle");
+    }
+  }
 
   useEffect(() => {
     api
@@ -47,6 +58,25 @@ export function TasksPage() {
           </button>
         </div>
       </header>
+
+      {user && !user.emailVerified && (
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          <span>
+            {resendState === "sent"
+              ? "Verification email sent — check your inbox."
+              : "Please verify your email address."}
+          </span>
+          {resendState !== "sent" && (
+            <button
+              onClick={handleResendVerification}
+              disabled={resendState === "sending"}
+              className="rounded-md border border-amber-300 px-3 py-1.5 text-sm font-medium text-amber-800 hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {resendState === "sending" ? "Sending…" : "Resend email"}
+            </button>
+          )}
+        </div>
+      )}
 
       <TaskForm onSubmit={handleCreate} />
 
