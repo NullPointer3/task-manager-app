@@ -11,21 +11,21 @@ const STATUSES: TaskStatus[] = ["TODO", "IN_PROGRESS", "DONE"];
 export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
   return (
     <li
-      className={`flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 ${
+      className={`flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-800 ${
         task.status === "DONE" ? "opacity-60" : ""
       }`}
     >
       <div className="min-w-0">
-        <strong className={`block text-sm text-gray-900 ${task.status === "DONE" ? "line-through" : ""}`}>
+        <strong className={`block text-sm text-gray-900 dark:text-gray-100 ${task.status === "DONE" ? "line-through" : ""}`}>
           {task.title}
         </strong>
-        {task.description && <p className="text-sm text-gray-600">{task.description}</p>}
+        {task.description && <p className="text-sm text-gray-600 dark:text-gray-400">{task.description}</p>}
       </div>
       <div className="flex items-center gap-2">
         <select
           value={task.status}
           onChange={(e) => onStatusChange(task.id, e.target.value as TaskStatus)}
-          className="rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none"
+          className="rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
         >
           {STATUSES.map((status) => (
             <option key={status} value={status}>
@@ -35,7 +35,7 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
         </select>
         <button
           onClick={() => onDelete(task.id)}
-          className="rounded-md border border-red-200 px-2 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50"
+          className="rounded-md border border-red-200 px-2 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950"
         >
           Delete
         </button>
